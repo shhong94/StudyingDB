@@ -4,14 +4,14 @@ import java.sql.*;
 import java.util.*;
 
 public class ZipcodeDAO {
-	private Connection conn;	// 연결
-	private PreparedStatement ps;
-	private final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+	private Connection conn;	// 연결 	// DB와 연결하는 객체
+	private PreparedStatement ps;	// SQL 문장을 담아서 전달. 매개변수를 set 지정해줘야함
+	private final String URL = "jdbc:oracle:thin:@localhost:1521:XE";	// 연결할 DB 주소
 
 	
 	public ZipcodeDAO () {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName("oracle.jdbc.driver.OracleDriver");	// DriverManager 생성
 		} catch (Exception e) {
 		
 		}
@@ -21,7 +21,7 @@ public class ZipcodeDAO {
 	// 연결
 	public void getConnection() {
 		try {
-			conn = DriverManager.getConnection(URL, "hr", "happy");
+			conn = DriverManager.getConnection(URL, "hr", "happy");	// 생성한 DriverManager로 DB와 연결
 		} catch (Exception e) {
 			
 		}
@@ -31,10 +31,10 @@ public class ZipcodeDAO {
 	// 닫기
 	public void disConnection() {
 		try {
-			if(ps != null) {
+			if(ps != null) {	// 전달할 SQL문장이 없을시 ps 종료
 				ps.close();
 			}
-			if (conn != null) {
+			if (conn != null) {	//	DB연결 객체가 없을시 연결 종료
 				conn.close();
 			}
 		} catch (Exception e) {
@@ -53,11 +53,11 @@ public class ZipcodeDAO {
 				
 				// SQL 문장 전송
 				String sql = "SELECT * FROM zipcode WHERE dong LIKE '%'||?||'%'";
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, dong);
+				ps = conn.prepareStatement(sql);	// conn 객체 이용하여 문장 전잘
+				ps.setString(1, dong);	// 매개변수 지정
 				
 				// 실행
-				ResultSet rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();	// SQL 문장 결과에 따른 데이터가 저장된 곳
 				while(rs.next()) {
 					ZipcodeVO vo = new ZipcodeVO();	// new를 통해 메모리를 개별적으로 할당해야 관리하기 편함
 					vo.setZipcode(rs.getString(1));
