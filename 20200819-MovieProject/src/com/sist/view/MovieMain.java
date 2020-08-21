@@ -29,6 +29,7 @@ public class MovieMain extends HttpServlet {
 		out.println("<body>");
 		out.println("<div class=container>");
 		out.println("<center>");
+		
 		out.println("<h1 class=text-center>영화목록</h1>");
 		out.println("<div class=row>");
 		out.println("<a href=MovieMain?no=1 class=\"btn btn-sm btn-primary\">현재상영영화</a>");
@@ -54,7 +55,7 @@ public class MovieMain extends HttpServlet {
 			
 		out.println("<div class=\"col-md-3\">");
 		out.println("<div class=\"thumbnail\">");
-		out.println("<a href=\"#\">");
+		out.println("<a href=MovieDetail?no="+vo.getNo()+">");										// MovieDetail로 no(영화번호) 넘겨주기 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 		out.println("<img src="+vo.getPoster()+" alt=\"Lights\" style=\"width:100%\">");
 		out.println("<div class=\"caption\">");
 		String title = vo.getTitle();

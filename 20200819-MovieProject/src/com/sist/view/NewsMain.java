@@ -1,4 +1,4 @@
-package com.sist.dao;
+package com.sist.view;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -47,7 +47,8 @@ public class NewsMain extends HttpServlet {
 			out.println("<td rowspan=3 width=40%>");
 			String poster = vo.getPoster();
 			poster = poster.substring(0, poster.lastIndexOf(")"));
-			out.println("<img src="+poster+" width=100%>");
+			out.println("<a href="+vo.getLink()+">");
+			out.println("<img src="+poster+" width=100%></a>");
 			out.println("</td>");
 			out.println("<td width=60% class=text-center><b><font color=orange>"+vo.getTitle()+"</font><b></td>");
 			out.println("</tr>");
