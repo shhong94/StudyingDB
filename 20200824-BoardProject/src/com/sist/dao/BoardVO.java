@@ -1,5 +1,7 @@
 package com.sist.dao;
 
+import java.util.*;
+
 /*
  * 	
 NO      NOT NULL NUMBER         
@@ -17,7 +19,7 @@ public class BoardVO {
 	private String subject;
 	private String content;
 	private	String pwd;
-	private	String regdate;
+	private	Date regdate;
 	private int hit;
 	
 	public int getNo() {
@@ -50,10 +52,11 @@ public class BoardVO {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String getRegdate() {
+	
+	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(String regdate) {
+	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
 	public int getHit() {

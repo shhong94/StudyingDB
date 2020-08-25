@@ -77,22 +77,33 @@ public class MusicDAO {
 	 */
 	
 	// 영화목록 출력
-	public ArrayList<MovieVO> movieAllData(){
+	public ArrayList<MovieVO> movieAllData(int page){
+		
 		ArrayList<MovieVO> list = new ArrayList<MovieVO>();
 		
 		try {
 			getConnection();
 			
-			String sql = "SELECT title, poster, regdate "
-						+ "FROM daum_movie "
-						+ "WHERE ceteno=1";
+			int rowSize = 10;
+			int start = (page*rowSize) - (rowSize - 1);
+			int end = page*rowSize;
+			
+			String sql = "SELECT title, regdate, genre, grade, actor, director, num "
+						+ "FROM(SELECT title, regdate, genre, grade, actor, director, rownum as num "
+						+ "FROM (SELECT title, regdate, genre, grade, actor, director FROM daum_movie ORDER BY no)) "
+						+ "WHERE num BETWEEN ? AND ?";
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, start);
+			ps.setInt(2, end);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				MovieVO vo = new MovieVO();
 				vo.setTitle(rs.getString(1));
-				vo.setPoster(rs.getString(2));
-				vo.setRegdate(rs.getString(3));
+				vo.setRegdate(rs.getString(2));
+				vo.setGenre(rs.getString(3));
+				vo.setGrade(rs.getString(4));
+				vo.setActor(rs.getString(5));
+				vo.setDirector(rs.getString(6));
 				list.add(vo);
 			}
 			rs.close();
@@ -105,5 +116,28 @@ public class MusicDAO {
 		}
 		
 		return list;
+	}
+	
+	// 총 페이지
+	public int boardTotalPage() {
+		int total = 0;
+		
+		try {
+			getConnection();
+			String sql = "SELECT CEIL(COUNT(*) / 10.0) FROM daum_movie";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			total = rs.getInt(1);
+			rs.close();
+		} 
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		finally {
+			disConnection();
+		}
+		
+		return total;
 	}
 }
