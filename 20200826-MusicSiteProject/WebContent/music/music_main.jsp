@@ -48,8 +48,7 @@
   
 <div class="container">
   <div class="row">
-  	<jsp:include page="<%=jsp %>"></jsp:include>
-  	<jsp:include page="home.jsp"></jsp:include>													<!--  -->
+  	<jsp:include page="<%=jsp %>"></jsp:include>											<!--  -->
   </div>
 </div>
 

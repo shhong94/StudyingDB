@@ -93,4 +93,47 @@ public class MelonDAO {
 	}
 	
 	
+	// 목록 출력하기
+	public ArrayList<MelonVO> melonAllData(int page, int cateno){
+		ArrayList<MelonVO> list = new ArrayList<MelonVO>();
+		
+		try {
+			getConnection();
+			
+			int rowSize = 10;
+			int start = (page*rowSize) - (rowSize - 1);
+			int end = page*rowSize;
+			
+			String sql ="SELECT mno, title, poster, singer, album,(RANK() OVER(ORDER BY mno)), num "
+					+ "FROM (SELECT mno, title, poster, singer, album, rownum as num "
+					+ "FROM (SELECT mno, title, poster, singer, album FROM melon WHERE cateno=? ORDER BY mno)) "		// ORDER BY 뒤에 WHERE cateno=?
+					+ "WHERE num BETWEEN ? AND ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, cateno);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				MelonVO vo = new MelonVO();
+				vo.setMno(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				vo.setPoster(rs.getString(3));
+				vo.setSinger(rs.getString(4));
+				vo.setAlbum(rs.getString(5));
+				vo.setRank(rs.getInt(6));
+				list.add(vo);
+			}
+			rs.close();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		finally {
+			disConnection();
+		}
+		return list;
+	}
+	
+	
 }

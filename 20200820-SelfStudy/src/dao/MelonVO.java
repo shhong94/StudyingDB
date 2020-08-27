@@ -7,6 +7,7 @@ public class MelonVO {
 	private	String poster;
 	private String singer;
 	private	String album;
+	private int rank;
 	
 	public int getMno() {
 		return mno;
@@ -43,6 +44,12 @@ public class MelonVO {
 	}
 	public void setAlbum(String album) {
 		this.album = album;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 	
 	
