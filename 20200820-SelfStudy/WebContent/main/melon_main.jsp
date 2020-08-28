@@ -4,6 +4,14 @@
 <%
 	MelonDAO dao = new MelonDAO();
 	ArrayList<String> list = dao.melonGenreMenu();
+	String mode = request.getParameter("mode");
+	String jsp = "";
+	if(mode == null){
+		jsp = "home.jsp";
+	}
+	else{
+		jsp = "melon.jsp";
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +36,7 @@
       	int i = 1;
       	for(String genre : list){
       %>
-      		<li class="active"><a href="melon_main.jsp?mode=<%=i%>"><%=genre %></a></li>
+      		<li><a href="melon_main.jsp?mode=<%=i%>"><%=genre %></a></li>
       <%
       	i++;
       	}
@@ -38,8 +46,7 @@
 </nav>
   
 <div class="container">
-  <h3>Inverted Navbar</h3>
-  <p>An inverted navbar is black instead of gray.</p>
+  <jsp:include page="<%=jsp %>"></jsp:include>
 </div>
 
 </body>
