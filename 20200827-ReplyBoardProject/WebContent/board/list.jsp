@@ -59,7 +59,7 @@
 						<%
 							}
 						%>
-						<%=vo.getSubject() %>
+						<a href="detail.jsp?no=<%=vo.getNo()%>&page=<%=currpage%>"><%=vo.getSubject() %></a>		<!-- 상세보기 이후에 원래 페이지로 돌아오기 위해 page 파라미터 전송 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆ -->
 						&nbsp;
 						<%
 							Date date = new Date();
@@ -85,15 +85,17 @@
 		<table class=table_content width=700>
 			<tr>
 				<td align=left>
+				<form method=post action="find.jsp">
 				Search: 
-				<select name=fd>								<!-- WHERE fd LIKE '%홍%' -->
-					<option value=name>이름</option>				
-					<option value=subject>제목</option>			
-					<option value=content>내용</option>
-					
-				</select>
-				<input type=text name=ss size=10>
-				<input type=submit value=찾기>
+					<select name=fs>								<!-- fs와 ss를 find.jsp로 보내기 -->
+						<option value=name>이름</option>				<!-- // fs : 컬럼		ss : 찾는단어 -->
+						<option value=subject>제목</option>			
+						<option value=content>내용</option>
+						
+					</select>
+					<input type=text name=ss size=10>
+					<input type=submit value=찾기>
+				</form>
 				</td>
 				<td align=right>
 				<a href="list.jsp?page=<%=currpage>1 ? currpage-1 : currpage%>">이전</a>
